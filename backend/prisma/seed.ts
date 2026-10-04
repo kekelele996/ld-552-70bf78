@@ -2,6 +2,11 @@ import { PrismaClient, JobStatus, ResumeStatus, InterviewResult, InterviewType, 
 import * as bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 async function main() {
+  const existingUsers = await prisma.user.count();
+  if (existingUsers > 0) {
+    console.log('TalentFlow seed skipped: database already has users.');
+    return;
+  }
   await prisma.auditLog.deleteMany();
   await prisma.offer.deleteMany();
   await prisma.interview.deleteMany();

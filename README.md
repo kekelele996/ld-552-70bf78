@@ -1,5 +1,16 @@
 # TalentFlow 招聘人才管理系统
 
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+访问地址：
+
+- 前端：http://localhost:38402
+- 后端 API：http://localhost:38502/api
+- 健康检查：http://localhost:38502/api/health
+
 TalentFlow 面向企业 HR、面试官、招聘经理和管理员，覆盖职位发布、简历投递、候选人推进、面试安排、Offer 审批与审计追踪。项目采用前后端分离架构：React 18 + TypeScript + Ant Design 5 前端，NestJS + Prisma 后端，PostgreSQL 与 JWT 认证。
 
 ## 技术栈
@@ -66,19 +77,16 @@ cd frontend
 npm run dev
 ```
 
-访问：`http://localhost:5173`。后端 API 默认：`http://localhost:3000/api`。
+访问：`http://localhost:38402`。后端 API 默认：`http://localhost:38502/api`。
 
 ## Docker Compose 部署
 
 ```bash
+cp .env.example .env
 docker compose up --build
 ```
 
-首次启动后进入 backend 容器运行 seed：
-
-```bash
-docker compose exec backend npm run prisma:seed
-```
+后端容器启动时会自动执行迁移并初始化演示数据；已有用户时会跳过 seed，避免覆盖本地数据。
 
 ## API 清单
 
@@ -118,5 +126,5 @@ docker compose exec backend npm run prisma:seed
 ```bash
 npm run typecheck --workspaces
 npm run build --workspaces
-curl -X POST http://localhost:3000/api/auth/login -H 'Content-Type: application/json' -d '{"email":"admin@talentflow.local","password":"talentflow123"}'
+curl -X POST http://localhost:38502/api/auth/login -H 'Content-Type: application/json' -d '{"email":"admin@talentflow.local","password":"talentflow123"}'
 ```

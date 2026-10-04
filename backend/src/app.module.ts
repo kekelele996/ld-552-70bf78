@@ -13,9 +13,11 @@ import { ResumesModule } from './modules/resumes/resumes.module';
 import { InterviewsModule } from './modules/interviews/interviews.module';
 import { OffersModule } from './modules/offers/offers.module';
 import { AuditModule } from './modules/audit/audit.module';
+import { HealthController } from './health.controller';
 
 @Module({
   imports: [JwtModule.register({ global: true, secret: process.env.JWT_SECRET || 'talentflow-secret' }), AuthModule, JobsModule, CandidatesModule, ResumesModule, InterviewsModule, OffersModule, AuditModule],
+  controllers: [HealthController],
   providers: [PrismaService, { provide: APP_GUARD, useClass: JwtAuthGuard }, { provide: APP_GUARD, useClass: RolesGuard }, { provide: APP_INTERCEPTOR, useClass: DataScopeInterceptor }, { provide: APP_INTERCEPTOR, useClass: AuditLogInterceptor }],
 })
 export class AppModule {}
